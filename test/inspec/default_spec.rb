@@ -9,6 +9,10 @@ control 'alfresco-01' do
     it { should exist }
   end
 
+  describe group('tomcat') do
+    it { should exist }
+  end
+
   describe 'Tomcat' do
     services.each do |service|
       it "Has a running #{service} service" do
