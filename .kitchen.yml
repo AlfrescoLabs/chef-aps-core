@@ -8,6 +8,7 @@ provisioner:
   # For example:
   #   always_update_cookbooks: <%= !ENV['CI'] %>
   always_update_cookbooks: true
+  require_chef_omnibus: 12.19.36
 
 verifier:
   name: inspec
@@ -26,3 +27,15 @@ suites:
   - name: default
     run_list:
       - recipe[aps-core::default]
+    verifier:
+       inspec_tests:
+        - path: test/inspec/
+    attributes: {
+      "aps-core" : {
+        "version" : "1.6.0",
+        "nexus" : {
+          "username" : "<%= ENV['NEXUS_USERNAME'] %>",
+          "password" : "<%= ENV['NEXUS_PASSWORD'] %>"
+        }
+      }
+    }
