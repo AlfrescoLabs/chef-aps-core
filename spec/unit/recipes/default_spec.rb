@@ -29,11 +29,21 @@ describe 'aps-core::default' do
     end
 
     it 'creates a mysql remote file' do
-      expect(chef_run).to create_remote_file('/usr/share/tomcat/lib/mysql-connector-java-5.1.39.jar')
+      expect(chef_run).to create_remote_file('/usr/share/tomcat/lib/mysql-connector-java-5.1.39.jar').with(
+        user: 'tomcat',
+        group: 'tomcat'
+      )
     end
 
     it 'creates a activiti remote file' do
-      expect(chef_run).to create_remote_file('/usr/share/tomcat/webapps/activiti-app.war')
+      expect(chef_run).to create_remote_file('/usr/share/tomcat/webapps/activiti-app.war').with(
+        user: 'tomcat',
+        group: 'tomcat'
+      )
+    end
+
+    it 'starts tomcat' do
+      expect(chef_run).to start_service('tomcat')
     end
   end
 end
