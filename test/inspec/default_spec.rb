@@ -54,7 +54,7 @@ control 'alfresco-01' do
     it { should_not be_readable.by_user('nginx') }
     it { should_not be_executable.by_user('nginx') }
   end
-  
+
   describe 'Tomcat' do
     services.each do |service|
       it "Has a running #{service} service" do
