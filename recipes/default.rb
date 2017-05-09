@@ -31,6 +31,7 @@ template '/usr/share/tomcat/lib/activiti-app.properties' do
   owner 'tomcat'
   group 'tomcat'
   mode '0740'
+  variables properties: node['aps-core']['activiti-app-properties']
 end
 
 service 'tomcat' do
