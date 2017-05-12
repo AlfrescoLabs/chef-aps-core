@@ -26,6 +26,14 @@ remote_file '/usr/share/tomcat/lib/mysql-connector-java-5.1.39.jar' do
   action :create
 end
 
+remote_file '/usr/share/tomcat/lib/postgresql-42.1.1.jar' do
+  source 'https://jdbc.postgresql.org/download/postgresql-42.1.1.jar'
+  owner 'tomcat'
+  group 'tomcat'
+  mode '0740'
+  action :create
+end
+
 template '/usr/share/tomcat/lib/activiti-app.properties' do
   source 'activiti-app.properties.erb'
   owner 'tomcat'
