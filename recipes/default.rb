@@ -24,6 +24,7 @@ remote_file '/usr/share/tomcat/lib/mysql-connector-java-5.1.39.jar' do
   group 'tomcat'
   mode '0740'
   action :create
+  only_if { node['aps-core']['activiti-app-properties']['datasource.engine'] == 'mysql' }
 end
 
 remote_file '/usr/share/tomcat/lib/postgresql-42.1.1.jar' do
@@ -32,6 +33,7 @@ remote_file '/usr/share/tomcat/lib/postgresql-42.1.1.jar' do
   group 'tomcat'
   mode '0740'
   action :create
+  only_if { node['aps-core']['activiti-app-properties']['datasource.engine'] == 'postgres' }
 end
 
 template '/usr/share/tomcat/lib/activiti-app.properties' do
@@ -39,6 +41,7 @@ template '/usr/share/tomcat/lib/activiti-app.properties' do
   owner 'tomcat'
   group 'tomcat'
   mode '0740'
+  variables properties: node['aps-core']['activiti-app-properties']
 end
 
 service 'tomcat' do
