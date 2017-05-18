@@ -24,7 +24,6 @@ remote_file '/usr/share/tomcat/lib/mysql-connector-java-5.1.39.jar' do
   group 'tomcat'
   mode '0740'
   action :create
-  only_if { node['aps-core']['activiti-app-properties']['datasource.engine'] == 'mysql' }
 end
 
 remote_file '/usr/share/tomcat/lib/postgresql-42.1.1.jar' do
