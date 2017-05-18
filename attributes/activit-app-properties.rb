@@ -7,12 +7,15 @@ default['aps-core']['activiti-app-properties']['license.multi-tenant'] = false
 default['aps-core']['activiti-app-properties']['datasource.username'] = 'alfresco'
 default['aps-core']['activiti-app-properties']['datasource.password'] = 'alfresco'
 
-# Db settings
-default['aps-core']['activiti-app-properties']['datasource.engine'] = 'mysql'
+# Driver to be used
 default['aps-core']['activiti-app-properties']['datasource.driver'] = 'com.mysql.jdbc.Driver'
-default['aps-core']['activiti-app-properties']['datasource.url'] = 'jdbc:mysql://127.0.0.1:3306/process?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8'
-default['aps-core']['activiti-app-properties']['hibernate.dialect'] = 'org.hibernate.dialect.MySQLDialect'
 
+# Database url. H2 by default, for standalone runs
+# THis should point to your database ( external possibly )
+default['aps-core']['activiti-app-properties']['datasource.url'] = 'jdbc:mysql://127.0.0.1:3306/process?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8'
+
+# Hibernate dialect of choice
+default['aps-core']['activiti-app-properties']['hibernate.dialect'] = 'org.hibernate.dialect.MySQLDialect'
 default['aps-core']['activiti-app-properties']['elastic-search.server.type'] = 'embedded'
 # default['aps-core']['activiti-app-properties']['elastic-search.discovery.type'] = unicast
 # default['aps-core']['activiti-app-properties']['elastic-search.cluster.name'] = elasticsearch
