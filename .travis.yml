@@ -8,7 +8,7 @@ env:
   matrix:
     - SUITE=default
 
-before_install: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -P chefdk -v 0.9.0
+before_install: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -P chefdk -v 1.2.20
 install: bundle install
 
 before_script: sudo iptables -L DOCKER || sudo iptables -N DOCKER
