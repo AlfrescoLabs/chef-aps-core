@@ -17,8 +17,15 @@ describe 'aps-core::default' do
       expect { chef_run }.to_not raise_error
     end
 
-    it 'Installs tomcat package' do
-      expect(chef_run).to install_yum_package('tomcat')
+    it 'includes appserver recipe' do
+      expect(chef_run).to include_recipe('aps-appserver::default')
+    end
+
+    it 'creates a activiti remote file' do
+      expect(chef_run).to create_remote_file('/var/lib/tomcat/activiti/webapps/activiti-app.war').with(
+        user: 'tomcat',
+        group: 'tomcat'
+      )
     end
 
     it 'creates a activiti app template' do
@@ -35,15 +42,8 @@ describe 'aps-core::default' do
       )
     end
 
-    it 'creates a activiti remote file' do
-      expect(chef_run).to create_remote_file('/usr/share/tomcat/webapps/activiti-app.war').with(
-        user: 'tomcat',
-        group: 'tomcat'
-      )
-    end
-
-    it 'starts tomcat' do
-      expect(chef_run).to start_service('tomcat')
+    it 'starts tomcat activiti' do
+      expect(chef_run).to start_service('tomcat-activiti')
     end
   end
 end
