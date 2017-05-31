@@ -20,7 +20,7 @@ default['aps-core']['activiti-app-properties']['elastic-search.server.type'] = '
 # default['aps-core']['activiti-app-properties']['elastic-search.discovery.type'] = unicast
 # default['aps-core']['activiti-app-properties']['elastic-search.cluster.name'] = elasticsearch
 # default['aps-core']['activiti-app-properties']['elastic-search.discovery.hosts'] = localhost:9300
-# default['aps-core']['activiti-app-properties']['elastic-search.data.path'] = '/usr/local/elasticsearch/data'
+default['aps-core']['activiti-app-properties']['elastic-search.data.path'] = lazy { "#{node['appserver']['home']}/activiti-elastic-search-data" }
 default['aps-core']['activiti-app-properties']['event.generation.enabled'] = true
 default['aps-core']['activiti-app-properties']['event.processing.enabled'] = true
 
