@@ -22,7 +22,7 @@ describe 'aps-core::default' do
     end
 
     it 'creates a activiti remote file' do
-      expect(chef_run).to create_remote_file('/var/lib/tomcat/activiti/webapps/activiti-app.war').with(
+      expect(chef_run).to create_remote_file('/usr/share/tomcat/webapps/activiti-app.war').with(
         user: 'tomcat',
         group: 'tomcat'
       )

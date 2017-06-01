@@ -41,7 +41,7 @@ control 'alfresco-01' do
     it { should_not be_executable.by_user('nginx') }
   end
 
-  describe file('/var/lib/tomcat/activiti/webapps/activiti-app.war') do
+  describe file('/usr/share/tomcat/webapps/activiti-app.war') do
     it { should exist }
     it { should be_file }
     its('mode') { should cmp '0740' }
