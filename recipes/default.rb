@@ -4,10 +4,7 @@
 #
 # Copyright (c) 2017 The Authors, All Rights Reserved.
 
-# Probably tomcat should be a pinned version...
-yum_package 'tomcat' do
-  action :install
-end
+include_recipe 'aps-appserver::default'
 
 # Probably this can be downloaded in a better way, but at least we are using chef resources.
 remote_file '/usr/share/tomcat/webapps/activiti-app.war' do
@@ -34,6 +31,6 @@ template '/usr/share/tomcat/lib/activiti-app.properties' do
   variables properties: node['aps-core']['activiti-app-properties']
 end
 
-service 'tomcat' do
+service 'tomcat-activiti' do
   action [:enable, :start]
 end
