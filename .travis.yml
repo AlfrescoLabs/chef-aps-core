@@ -9,11 +9,13 @@ env:
     - SUITE=default
 
 before_install: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -P chefdk -v 1.2.20
-install: bundle install
+install:
+  - chef exec bundle
+  - chef exec berks
 
 before_script: sudo iptables -L DOCKER || sudo iptables -N DOCKER
 
 script:
-  - bundle exec rake default
+  - chef exec rake default
   # Run test-kitchen with docker driver, for example:
-  - bundle exec rake "integration:docker[$SUITE, test]"
+  - chef exec bundle exec rake "integration:docker[$SUITE, test]"

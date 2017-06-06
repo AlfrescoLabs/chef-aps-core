@@ -13,4 +13,6 @@ bin/*
 .bundle/*
 
 .kitchen/
-.kitchen.local.yml
+.kitchen.docker.yml
+
+coverage
