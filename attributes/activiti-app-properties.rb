@@ -10,8 +10,7 @@ default['aps-core']['activiti-app-properties']['datasource.password'] = 'alfresc
 # Driver to be used
 default['aps-core']['activiti-app-properties']['datasource.driver'] = 'com.mysql.jdbc.Driver'
 
-# Database url. H2 by default, for standalone runs
-# THis should point to your database ( external possibly )
+# This should point to your database ( external possibly )
 default['aps-core']['activiti-app-properties']['datasource.url'] = 'jdbc:mysql://127.0.0.1:3306/process?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8'
 
 # Hibernate dialect of choice
@@ -20,7 +19,7 @@ default['aps-core']['activiti-app-properties']['elastic-search.server.type'] = '
 # default['aps-core']['activiti-app-properties']['elastic-search.discovery.type'] = unicast
 # default['aps-core']['activiti-app-properties']['elastic-search.cluster.name'] = elasticsearch
 # default['aps-core']['activiti-app-properties']['elastic-search.discovery.hosts'] = localhost:9300
-# default['aps-core']['activiti-app-properties']['elastic-search.data.path'] = '/usr/local/elasticsearch/data'
+default['aps-core']['activiti-app-properties']['elastic-search.data.path'] = lazy { "#{node['appserver']['home']}/activiti-elastic-search-data" }
 default['aps-core']['activiti-app-properties']['event.generation.enabled'] = true
 default['aps-core']['activiti-app-properties']['event.processing.enabled'] = true
 

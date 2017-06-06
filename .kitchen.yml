@@ -38,4 +38,4 @@ suites:
           "password" : "<%= ENV['NEXUS_PASSWORD'] %>"
         }
       }
-    }
+     }

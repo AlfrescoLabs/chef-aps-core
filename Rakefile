@@ -1,36 +1,31 @@
-
 # !/usr/bin/env rake
 
-require 'foodcritic'
-require 'rspec/core/rake_task'
-require 'cookstyle'
+require 'yamllint/rake_task'
 
-desc 'Runs knife cookbook test'
-task :knife do
-  sh 'bundle exec knife cookbook test cookbook -o ./ -a'
+KITCHEN_DOCKER_FILENAME = '.kitchen.docker.yml'.freeze
+KITCHEN_VAGRANT_FILENAME = '.kitchen.yml'.freeze
+KITCHEN_DOCKER_DIFF_FILENAME = '.kitchen-diff.docker.yml'.freeze
+
+desc 'Runs yamllint checks'
+task :yamllint do
+  YamlLint::RakeTask.new do |t|
+    t.paths = %w( \.*\.y*ml )
+  end
 end
 
 desc 'Runs ChefSpec tests'
 task :chefspec do
-  sh 'rspec'
+  sh 'chef exec bundle exec rspec'
 end
 
 desc 'Runs foodcritic test'
 task :foodcritic do
-  FoodCritic::Rake::LintTask.new
-  sh 'bundle exec foodcritic -f any .'
-end
-
-desc 'Runs rspec tests in test/unit folder'
-task :unit do
-  RSpec::Core::RakeTask.new(:unit) do |t|
-    t.pattern = 'test/unit/**/*_spec.rb'
-  end
+  sh 'chef exec bundle exec foodcritic -f any .'
 end
 
 desc 'Runs cookstyle'
 task :cookstyle do
-  sh 'bundle exec cookstyle'
+  sh 'chef exec bundle exec cookstyle'
 end
 
 desc 'Run Test Kitchen integration tests'
@@ -67,8 +62,12 @@ namespace :integration do
 
   desc 'Run integration tests with kitchen-docker'
   task :docker, [:regexp, :action] do |_t, args|
-    run_kitchen(args.action, args.regexp, local_config: '.kitchen.docker.yml')
+    require 'yaml'
+    kvf = YAML.load_file(File.join(__dir__, KITCHEN_VAGRANT_FILENAME))
+    kdf = YAML.load_file(File.join(__dir__, KITCHEN_DOCKER_DIFF_FILENAME))
+    File.write(KITCHEN_DOCKER_FILENAME, kvf.merge(kdf).to_yaml)
+    run_kitchen(args.action, args.regexp, local_config: KITCHEN_DOCKER_FILENAME)
   end
 end
 
-task default: [:foodcritic, :knife, :unit, :chefspec, :cookstyle]
+task default: [:yamllint, :foodcritic, :chefspec, :cookstyle]

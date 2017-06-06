@@ -1,4 +1,4 @@
-services = ['tomcat']
+services = ['tomcat-activiti']
 
 control 'alfresco-01' do
   impact 0.7
