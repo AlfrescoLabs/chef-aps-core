@@ -12,6 +12,7 @@ gem 'rake'
 gem 'rspec', '~> 3.5.0'
 gem 'simplecov', '~> 0.12.0'
 gem 'simplecov-rcov', '~> 0.2.3'
+gem 'yamllint'
 
 group :docker do
   gem 'kitchen-docker', '~> 2.6.0'
