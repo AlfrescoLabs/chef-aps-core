@@ -10,8 +10,7 @@ default['aps-core']['activiti-app-properties']['datasource.password'] = 'alfresc
 # Driver to be used
 default['aps-core']['activiti-app-properties']['datasource.driver'] = 'com.mysql.jdbc.Driver'
 
-# Database url. H2 by default, for standalone runs
-# THis should point to your database ( external possibly )
+# This should point to your database ( external possibly )
 default['aps-core']['activiti-app-properties']['datasource.url'] = 'jdbc:mysql://127.0.0.1:3306/process?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8'
 
 # Hibernate dialect of choice
