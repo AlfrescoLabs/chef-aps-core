@@ -8,9 +8,9 @@ gem 'cookstyle', '~> 1.2.0'
 gem 'berkshelf', '~> 5.1.0'
 gem 'chefspec', '~> 5.3.0'
 gem 'coveralls', require: false
-gem 'rake'
+gem 'rake', '~> 12.0.0'
 gem 'chef', '~> 12.19.36'
-gem 'yamllint'
+gem 'yamllint', '~> 0.0.9'
 
 group :docker do
   gem 'test-kitchen', '~> 1.4'
