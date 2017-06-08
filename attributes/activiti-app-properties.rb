@@ -8,13 +8,17 @@ default['aps-core']['activiti-app-properties']['datasource.username'] = 'alfresc
 default['aps-core']['activiti-app-properties']['datasource.password'] = 'alfresco'
 
 # Driver to be used
-default['aps-core']['activiti-app-properties']['datasource.driver'] = 'com.mysql.jdbc.Driver'
+default['aps-core']['activiti-app-properties']['datasource.driver'] = 'com.mysql.jdbc.Driver' if node['aps-core']['db']['engine'] == 'mysql'
+default['aps-core']['activiti-app-properties']['datasource.driver'] = 'org.postgresql.Driver' if node['aps-core']['db']['engine'] == 'postgres'
 
 # This should point to your database ( external possibly )
-default['aps-core']['activiti-app-properties']['datasource.url'] = 'jdbc:mysql://127.0.0.1:3306/process?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8'
+default['aps-core']['activiti-app-properties']['datasource.url'] = lazy { "jdbc:mysql://#{node['aps-core']['db']['host']}:3306/process?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8" } if node['aps-core']['db']['engine'] == 'mysql'
+default['aps-core']['activiti-app-properties']['datasource.url'] = lazy { "jdbc:postgresql://#{node['aps-core']['db']['host']}:5432/process?characterEncoding=UTF-8" } if node['aps-core']['db']['engine'] == 'postgres'
 
 # Hibernate dialect of choice
-default['aps-core']['activiti-app-properties']['hibernate.dialect'] = 'org.hibernate.dialect.MySQLDialect'
+default['aps-core']['activiti-app-properties']['hibernate.dialect'] = 'org.hibernate.dialect.MySQLDialect' if node['aps-core']['db']['engine'] == 'mysql'
+default['aps-core']['activiti-app-properties']['hibernate.dialect'] = 'org.hibernate.dialect.PostgreSQLDialect' if node['aps-core']['db']['engine'] == 'postgres'
+
 default['aps-core']['activiti-app-properties']['elastic-search.server.type'] = 'embedded'
 # default['aps-core']['activiti-app-properties']['elastic-search.discovery.type'] = unicast
 # default['aps-core']['activiti-app-properties']['elastic-search.cluster.name'] = elasticsearch
