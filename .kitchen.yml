@@ -24,18 +24,47 @@ platforms:
 
 
 suites:
-  - name: default
+  - name: core-mysql
     run_list:
       - recipe[aps-core::default]
+      - recipe[alfresco-utils::node_json]
     verifier:
        inspec_tests:
-        - path: test/inspec/
+        - name: chef-aps-inspec-core
+          git: https://github.com/Alfresco/chef-aps-inspec-core
+        - name: chef-aps-inspec-tomcat
+          git: https://github.com/Alfresco/chef-aps-inspec-tomcat          
     attributes: {
       "aps-core" : {
         "version" : "1.6.0",
         "nexus" : {
           "username" : "<%= ENV['NEXUS_USERNAME'] %>",
           "password" : "<%= ENV['NEXUS_PASSWORD'] %>"
+        },
+        "db" : {
+          "engine" : "mysql"
+          }
         }
       }
+  - name: core-postgres
+    run_list:
+      - recipe[aps-core::default]
+      - recipe[alfresco-utils::node_json]
+    verifier:
+       inspec_tests:
+        - name: chef-aps-inspec-core
+          git: https://github.com/Alfresco/chef-aps-inspec-core
+        - name: chef-aps-inspec-tomcat
+          git: https://github.com/Alfresco/chef-aps-inspec-tomcat
+    attributes: {
+      "aps-core" : {
+        "version" : "1.6.0",
+        "nexus" : {
+          "username" : "<%= ENV['NEXUS_USERNAME'] %>",
+          "password" : "<%= ENV['NEXUS_PASSWORD'] %>"
+        },
+        "db" : {
+          "engine" : "postgres"
+          }
+        }
      }
