@@ -6,7 +6,8 @@ services: docker
 
 env:
   matrix:
-    - SUITE=default
+    - SUITE=core-mysql
+    - SUITE=core-postgres
 
 before_install: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -P chefdk -v 1.2.20
 install:
