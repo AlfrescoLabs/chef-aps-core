@@ -25,7 +25,7 @@ RSpec.describe 'aps-core::default' do
   end
 
   it 'creates a activiti remote file' do
-    expect(chef_run).to create_if_missing_remote_file('/usr/share/tomcat/webapps/activiti-app.war').with(
+    expect(chef_run).to create_remote_file_if_missing('/usr/share/tomcat/webapps/activiti-app.war').with(
       user: 'tomcat',
       group: 'tomcat'
     )
@@ -39,7 +39,7 @@ RSpec.describe 'aps-core::default' do
   end
 
   it 'creates a mysql remote file' do
-    expect(chef_run).to create_if_missing_remote_file('/usr/share/tomcat/lib/mysql-connector-java-5.1.32.jar').with(
+    expect(chef_run).to create_remote_file_if_missing('/usr/share/tomcat/lib/mysql-connector-java-5.1.32.jar').with(
       user: 'tomcat',
       group: 'tomcat'
     )
