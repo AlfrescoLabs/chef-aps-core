@@ -74,3 +74,4 @@ default['aps-core']['activiti-app-properties']['cors.allowed.headers'] = 'Author
 default['aps-core']['activiti-app-properties']['cors.exposed.headers'] = 'Access-Control-Allow-Origin,Access-Control-Allow-Credentials'
 default['aps-core']['activiti-app-properties']['cors.support.credentials'] = true
 default['aps-core']['activiti-app-properties']['cors.preflight.maxage'] = 10
+default['aps-core']['activiti-app-properties']['spring.freemarker.template-loader-path'] = 'classpath:/email-templates'
