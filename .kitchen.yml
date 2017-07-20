@@ -27,13 +27,14 @@ suites:
   - name: core-mysql
     run_list:
       - recipe[aps-core::default]
+      - recipe[aps-core::redeploy]
       - recipe[alfresco-utils::node_json]
     verifier:
        inspec_tests:
         - name: chef-aps-inspec-core
           git: https://github.com/Alfresco/chef-aps-inspec-core
         - name: chef-aps-inspec-tomcat
-          git: https://github.com/Alfresco/chef-aps-inspec-tomcat          
+          git: https://github.com/Alfresco/chef-aps-inspec-tomcat
     attributes: {
       "aps-core" : {
         "version" : "1.6.0",
@@ -49,6 +50,7 @@ suites:
   - name: core-postgres
     run_list:
       - recipe[aps-core::default]
+      - recipe[aps-core::redeploy]
       - recipe[alfresco-utils::node_json]
     verifier:
        inspec_tests:

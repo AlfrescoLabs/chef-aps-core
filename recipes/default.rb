@@ -14,7 +14,7 @@ remote_file "#{tomcat_home}/webapps/activiti-app.war" do
   owner 'tomcat'
   group 'tomcat'
   mode 00740
-  action :create
+  action :create_if_missing
   retries 2
 end
 
@@ -23,7 +23,7 @@ remote_file "#{tomcat_home}/lib/mysql-connector-java-#{node['aps-core']['mysql_d
   owner 'tomcat'
   group 'tomcat'
   mode 00740
-  action :create
+  action :create_if_missing
   only_if { node['aps-core']['db']['engine'] == 'mysql' }
   retries 2
 end
@@ -33,7 +33,7 @@ remote_file "#{tomcat_home}/lib/postgresql-#{node['aps-core']['postgres_driver']
   owner 'tomcat'
   group 'tomcat'
   mode 00740
-  action :create
+  action :create_if_missing
   only_if { node['aps-core']['db']['engine'] == 'postgres' }
   retries 2
 end
