@@ -10,7 +10,7 @@ remote_file tmp_activiti_war_path do
   owner node['appserver']['username']
   group node['appserver']['group']
   mode 00740
-  action :create_if_missing
+  action node['aps-core']['attempt_upgrade'] ? :create : :create_if_missing
   retries 2
 end
 
@@ -19,25 +19,25 @@ file final_activiti_war_path do
   group node['appserver']['group']
   mode 00740
   content lazy { ::File.open(tmp_activiti_war_path).read }
-  action :create
+  action node['aps-core']['attempt_upgrade'] ? :create : :create_if_missing
 end
 
-remote_file "#{tomcat_home}/lib/mysql-connector-java-#{node['aps-core']['mysql_driver']['version']}.jar" do
+remote_file "#{tomcat_home}/lib/mysql-connector-java.jar" do
   source node['aps-core']['mysql_driver']['url']
   owner node['appserver']['username']
   group node['appserver']['group']
   mode 00740
-  action :create_if_missing
+  action node['aps-core']['attempt_upgrade'] ? :create : :create_if_missing
   only_if { node['aps-core']['db']['engine'] == 'mysql' }
   retries 2
 end
 
-remote_file "#{tomcat_home}/lib/postgresql-#{node['aps-core']['postgres_driver']['version']}.jar" do
+remote_file "#{tomcat_home}/lib/postgresql.jar" do
   source node['aps-core']['postgres_driver']['url']
   owner node['appserver']['username']
   group node['appserver']['group']
   mode 00740
-  action :create_if_missing
+  action node['aps-core']['attempt_upgrade'] ? :create : :create_if_missing
   only_if { node['aps-core']['db']['engine'] == 'postgres' }
   retries 2
 end

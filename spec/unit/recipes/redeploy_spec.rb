@@ -20,11 +20,15 @@ RSpec.describe 'aps-core::redeploy' do
     expect { chef_run }.to_not raise_error
   end
 
+  it 'includes _download_artifacts recipe' do
+    expect(chef_run).to include_recipe('aps-core::_download_artifacts')
+  end
+
   it 'creates a activiti app template' do
     expect(chef_run).to create_template('/usr/share/tomcat/lib/activiti-app.properties')
   end
 
-  it 'starts tomcat activiti' do
+  it 'restarts tomcat activiti' do
     expect(chef_run).to restart_service('tomcat-activiti')
   end
 end
