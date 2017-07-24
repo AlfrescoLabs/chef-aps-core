@@ -24,11 +24,8 @@ RSpec.describe 'aps-core::default' do
     expect(chef_run).to include_recipe('aps-appserver::default')
   end
 
-  it 'creates a activiti remote file' do
-    expect(chef_run).to create_remote_file_if_missing('/usr/share/tomcat/webapps/activiti-app.war').with(
-      user: 'tomcat',
-      group: 'tomcat'
-    )
+  it 'includes _download_artifacts recipe' do
+    expect(chef_run).to include_recipe('aps-core::_download_artifacts')
   end
 
   it 'creates a activiti app template' do
@@ -38,14 +35,7 @@ RSpec.describe 'aps-core::default' do
     )
   end
 
-  it 'creates a mysql remote file' do
-    expect(chef_run).to create_remote_file_if_missing('/usr/share/tomcat/lib/mysql-connector-java-5.1.32.jar').with(
-      user: 'tomcat',
-      group: 'tomcat'
-    )
-  end
-
-  it 'starts tomcat activiti' do
-    expect(chef_run).to start_service('tomcat-activiti')
+  it 'enable tomcat activiti' do
+    expect(chef_run).to enable_service('tomcat-activiti')
   end
 end
