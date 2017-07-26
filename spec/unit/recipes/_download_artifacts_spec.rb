@@ -21,31 +21,15 @@ RSpec.describe 'aps-core::_download_artifacts' do
   end
 
   it 'creates if missing a activiti remote file' do
-    expect(chef_run).to create_remote_file_if_missing('/var/chef/cache/activiti-app.war').with(
-      user: 'tomcat',
-      group: 'tomcat'
-    )
-  end
-
-  it 'creates a activiti remote file' do
-    chef_run.node.normal['aps-core']['attempt_upgrade'] = true
+    chef_run.node.normal['aps-core']['version'] = '1.6.4'
     chef_run.converge(described_recipe)
-    expect(chef_run).to create_remote_file('/var/chef/cache/activiti-app.war').with(
+    expect(chef_run).to create_remote_file_if_missing('/var/chef/cache/activiti-app-1.6.4.war').with(
       user: 'tomcat',
       group: 'tomcat'
     )
   end
 
   it 'creates if missing a activiti file' do
-    expect(chef_run).to create_file_if_missing('/usr/share/tomcat/webapps/activiti-app.war').with(
-      user: 'tomcat',
-      group: 'tomcat'
-    )
-  end
-
-  it 'creates a activiti file' do
-    chef_run.node.normal['aps-core']['attempt_upgrade'] = true
-    chef_run.converge(described_recipe)
     expect(chef_run).to create_file('/usr/share/tomcat/webapps/activiti-app.war').with(
       user: 'tomcat',
       group: 'tomcat'
@@ -53,25 +37,26 @@ RSpec.describe 'aps-core::_download_artifacts' do
   end
 
   it 'creates if missing a mysql remote file' do
-    expect(chef_run).to create_remote_file_if_missing('/usr/share/tomcat/lib/mysql-connector-java.jar').with(
-      user: 'tomcat',
-      group: 'tomcat'
-    )
-  end
-
-  it 'creates a mysql remote file' do
-    chef_run.node.normal['aps-core']['attempt_upgrade'] = true
+    chef_run.node.normal['aps-core']['mysql_driver']['version'] = '5.1.32'
     chef_run.converge(described_recipe)
-    expect(chef_run).to create_remote_file('/usr/share/tomcat/lib/mysql-connector-java.jar').with(
+    expect(chef_run).to create_remote_file_if_missing('/var/chef/cache/mysql-connector-java-5.1.32.jar').with(
       user: 'tomcat',
       group: 'tomcat'
     )
   end
 
-  it 'creates if missing a mysql remote file' do
+  it 'creates a mysql file' do
+    expect(chef_run).to create_file('/usr/share/tomcat/lib/mysql-connector-java.jar').with(
+      user: 'tomcat',
+      group: 'tomcat'
+    )
+  end
+
+  it 'creates if missing a postgres remote file' do
     chef_run.node.normal['aps-core']['db']['engine'] = 'postgres'
+    chef_run.node.normal['aps-core']['postgres_driver']['version'] = '42.1.1'
     chef_run.converge(described_recipe)
-    expect(chef_run).to create_remote_file_if_missing('/usr/share/tomcat/lib/postgresql.jar').with(
+    expect(chef_run).to create_remote_file_if_missing('/var/chef/cache/postgresql-42.1.1.jar').with(
       user: 'tomcat',
       group: 'tomcat'
     )
@@ -79,9 +64,8 @@ RSpec.describe 'aps-core::_download_artifacts' do
 
   it 'creates a postgres remote file' do
     chef_run.node.normal['aps-core']['db']['engine'] = 'postgres'
-    chef_run.node.normal['aps-core']['attempt_upgrade'] = true
     chef_run.converge(described_recipe)
-    expect(chef_run).to create_remote_file('/usr/share/tomcat/lib/postgresql.jar').with(
+    expect(chef_run).to create_file('/usr/share/tomcat/lib/postgresql.jar').with(
       user: 'tomcat',
       group: 'tomcat'
     )
