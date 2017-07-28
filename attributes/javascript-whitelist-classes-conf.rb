@@ -1,2 +1,2 @@
-default['aps-core']['javascript-whitelist-classes-conf']['override'] = true
-default['aps-core']['javascript-whitelist-classes-conf']['values'] = %w(test)
+default['aps-core']['javascript-whitelist-classes-conf']['override'] = false
+default['aps-core']['javascript-whitelist-classes-conf']['values'] = %w()

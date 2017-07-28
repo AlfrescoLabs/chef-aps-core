@@ -58,9 +58,8 @@ whitelist_templates.each do |template|
     mode 00740
     variables values: node['aps-core'][attribute_name]['values']
   end
-  files_to_override << template_path
+  files_to_override.push(template_path)
 end
-
 files_to_override_tos = files_to_override.join(' ')
 
 execute 'Replace whitelist files' do

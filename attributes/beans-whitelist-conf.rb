@@ -1,2 +1,2 @@
-default['aps-core']['beans-whitelist-conf']['override'] = true
-default['aps-core']['beans-whitelist-conf']['values'] = %w(test)
+default['aps-core']['beans-whitelist-conf']['override'] = false
+default['aps-core']['beans-whitelist-conf']['values'] = %w()
