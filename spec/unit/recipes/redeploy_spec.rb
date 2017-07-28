@@ -28,7 +28,11 @@ RSpec.describe 'aps-core::redeploy' do
     expect(chef_run).to create_template('/usr/share/tomcat/lib/activiti-app.properties')
   end
 
-  it 'restarts tomcat activiti' do
-    expect(chef_run).to restart_service('tomcat-activiti')
+  it 'stop tomcat activiti' do
+    expect(chef_run).to stop_service('tomcat-activiti')
+  end
+
+  it 'start tomcat activiti' do
+    expect(chef_run).to start_service('tomcat-activiti')
   end
 end

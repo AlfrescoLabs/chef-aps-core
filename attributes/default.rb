@@ -16,3 +16,4 @@ default['aps-core']['postgres_driver']['version'] = '42.1.1'
 postgres_driver_version = node['aps-core']['postgres_driver']['version']
 default['aps-core']['postgres_driver']['url'] = lazy { "https://jdbc.postgresql.org/download/postgresql-#{postgres_driver_version}.jar" }
 default['aps-core']['appserver']['tomcat_home'] = '/usr/share/tomcat'
+default['aps-core']['war_file_paths_to_override'] = %w()
