@@ -11,6 +11,7 @@ gem 'coveralls', require: false
 gem 'rake', '~> 12.0.0'
 gem 'chef', '~> 12.19.36'
 gem 'yamllint', '~> 0.0.9'
+gem 'molinillo', '~> 0.5.7'
 
 group :docker do
   gem 'test-kitchen', '~> 1.4'
