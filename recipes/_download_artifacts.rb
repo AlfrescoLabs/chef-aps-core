@@ -6,6 +6,7 @@ nexus_password = node['aps-core']['nexus']['password']
 aps_version = node['aps-core']['version']
 is_mysql = node['aps-core']['db']['engine'] == 'mysql'
 is_postgres = node['aps-core']['db']['engine'] == 'postgres'
+files_to_override = node['aps-core']['war_file_paths_to_override'].dup # dup creates a new instance and does not preserve the frozen state
 
 tmp_activiti_war_path = "#{Chef::Config[:file_cache_path]}/activiti-app-#{aps_version}.war"
 final_activiti_war_path = "#{tomcat_home}/webapps/activiti-app.war"
@@ -23,6 +24,49 @@ remote_file tmp_activiti_war_path do
   mode 00740
   action :create_if_missing
   retries 2
+end
+
+directory "#{Chef::Config[:file_cache_path]}/WEB-INF/classes/activiti" do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+  action :create
+end
+
+directory "#{Chef::Config[:file_cache_path]}/WEB-INF/classes/activiti" do
+  owner appserver_username
+  group appserver_group
+  mode 00740
+  recursive true
+  action :create
+end
+
+whitelist_templates = %w(beans-whitelist.conf javascript-whitelist-classes.conf
+                         whitelisted-classes.conf whitelisted-scripts.conf
+                         shell-commands-whitelist.conf call-whitelist.conf
+)
+
+whitelist_templates.each do |template|
+  attribute_name = template.tr('.', '-')
+  template_path = "WEB-INF/classes/activiti/#{template}"
+  next unless node['aps-core'][attribute_name]['override']
+  template "#{Chef::Config[:file_cache_path]}/#{template_path}" do
+    source "#{template}.erb"
+    owner appserver_username
+    group appserver_group
+    mode 00740
+    variables values: node['aps-core'][attribute_name]['values']
+  end
+  files_to_override.push(template_path)
+end
+files_to_override_tos = files_to_override.join(' ')
+
+execute 'Replace whitelist files' do
+  command "jar uf #{tmp_activiti_war_path} #{files_to_override_tos}"
+  cwd Chef::Config[:file_cache_path]
+  action :run
+  only_if { !files_to_override_tos.empty? }
 end
 
 file final_activiti_war_path do
