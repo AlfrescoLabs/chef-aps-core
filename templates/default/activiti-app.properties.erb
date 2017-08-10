@@ -1,6 +1,6 @@
 <% if @properties %>
   <% @properties.each do |property_type, value| %>
-    <% if !value.empty? %>
+    <% if !value.nil? %>
 <%= property_type %>=<%= value %>
     <% end %>
   <% end %>
