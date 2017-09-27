@@ -4,6 +4,7 @@ appserver_group = node['appserver']['group']
 nexus_username = node['aps-core']['nexus']['username']
 nexus_password = node['aps-core']['nexus']['password']
 aps_version = node['aps-core']['version']
+major_minor_version = aps_version[0, aps_version.rindex('.')]
 aps_admin_version = node['aps-core']['admin_app']['version']
 is_mysql = node['aps-core']['db']['engine'] == 'mysql'
 is_postgres = node['aps-core']['db']['engine'] == 'postgres'
@@ -31,7 +32,7 @@ remote_file tmp_activiti_war_path do
 end
 
 remote_file tmp_admin_zip_path do
-  source "http://eu.dl.alfresco.com.s3.amazonaws.com/release/enterprise/process-services-1.6/#{aps_admin_version}/activiti-admin-#{aps_admin_version}.zip"
+  source "http://eu.dl.alfresco.com.s3.amazonaws.com/release/enterprise/process-services-#{major_minor_version}/#{aps_admin_version}/activiti-admin-#{aps_admin_version}.zip"
   owner appserver_username
   group appserver_group
   mode 00740

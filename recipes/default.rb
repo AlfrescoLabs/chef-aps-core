@@ -5,9 +5,8 @@
 # Copyright (c) 2017 The Authors, All Rights Reserved.
 
 include_recipe 'aps-appserver::default'
-
 include_recipe 'aps-core::_download_artifacts'
-
+include_recipe 'aps-core::install-admin' if node['aps-core']['admin_app']['install']
 tomcat_home = node['aps-core']['appserver']['tomcat_home']
 
 template "#{tomcat_home}/lib/activiti-app.properties" do
@@ -30,5 +29,3 @@ end
 service "#{node['appserver']['installname']}-#{node['tomcat']['service']}" do
   action [:enable]
 end
-
-include_recipe  'aps-core::install-admin' if node['aps-core']['admin_app']['install']
