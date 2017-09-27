@@ -6,6 +6,7 @@ services: docker
 
 env:
   matrix:
+    - SUITE=default
     - SUITE=core-mysql
     - SUITE=core-postgres
 
