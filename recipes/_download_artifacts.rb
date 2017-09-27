@@ -14,7 +14,6 @@ tmp_activiti_war_path = "#{Chef::Config[:file_cache_path]}/activiti-app-#{aps_ve
 final_activiti_war_path = "#{tomcat_home}/webapps/activiti-app.war"
 
 tmp_admin_zip_path = "#{Chef::Config[:file_cache_path]}/activiti-admin-#{aps_admin_version}.zip"
-final_admin_zip_path = "/tmp/activiti-admin-#{aps_admin_version}.zip"
 
 tmp_mysql_connector_path = "#{Chef::Config[:file_cache_path]}/mysql-connector-java-#{node['aps-core']['mysql_driver']['version']}.jar"
 final_mysql_connector_path = "#{tomcat_home}/lib/mysql-connector-java.jar"
@@ -127,14 +126,5 @@ file final_postgresql_connector_path do
   mode 00740
   content lazy { ::File.open(tmp_postgresql_connector_path).read }
   only_if { is_postgres }
-  action :create
-end
-
-file final_admin_zip_path do
-  owner appserver_username
-  group appserver_group
-  mode 00740
-  content lazy { ::File.open(tmp_admin_zip_path).read }
-  only_if { admin_enabled }
   action :create
 end

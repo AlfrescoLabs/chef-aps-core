@@ -30,3 +30,5 @@ end
 service "#{node['appserver']['installname']}-#{node['tomcat']['service']}" do
   action [:enable]
 end
+
+include_recipe  'aps-core::install-admin' if node['aps-core']['admin_app']['install']
