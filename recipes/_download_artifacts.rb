@@ -4,12 +4,17 @@ appserver_group = node['appserver']['group']
 nexus_username = node['aps-core']['nexus']['username']
 nexus_password = node['aps-core']['nexus']['password']
 aps_version = node['aps-core']['version']
+major_minor_version = aps_version[0, aps_version.rindex('.')]
+aps_admin_version = node['aps-core']['admin_app']['version']
 is_mysql = node['aps-core']['db']['engine'] == 'mysql'
 is_postgres = node['aps-core']['db']['engine'] == 'postgres'
+admin_enabled = node['aps-core']['admin_app']['install']
 files_to_override = node['aps-core']['war_file_paths_to_override'].dup # dup creates a new instance and does not preserve the frozen state
 
 tmp_activiti_war_path = "#{Chef::Config[:file_cache_path]}/activiti-app-#{aps_version}.war"
 final_activiti_war_path = "#{tomcat_home}/webapps/activiti-app.war"
+
+tmp_admin_zip_path = "#{Chef::Config[:file_cache_path]}/activiti-admin-#{aps_admin_version}.zip"
 
 tmp_mysql_connector_path = "#{Chef::Config[:file_cache_path]}/mysql-connector-java-#{node['aps-core']['mysql_driver']['version']}.jar"
 final_mysql_connector_path = "#{tomcat_home}/lib/mysql-connector-java.jar"
@@ -24,6 +29,16 @@ remote_file tmp_activiti_war_path do
   mode 00740
   action :create_if_missing
   retries 2
+end
+
+remote_file tmp_admin_zip_path do
+  source "http://eu.dl.alfresco.com.s3.amazonaws.com/release/enterprise/process-services-#{major_minor_version}/#{aps_admin_version}/activiti-admin-#{aps_admin_version}.zip"
+  owner appserver_username
+  group appserver_group
+  mode 00740
+  action :create_if_missing
+  retries 2
+  only_if { admin_enabled }
 end
 
 directory "#{Chef::Config[:file_cache_path]}/WEB-INF/classes/activiti" do
