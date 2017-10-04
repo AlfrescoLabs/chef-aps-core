@@ -2,9 +2,9 @@
 default['aps-core']['activiti-admin-properties']['security.rememberme.key'] = 'activitis3cr3tk3y'
 
 # Database config
-default['aps-core']['activiti-admin-properties']['datasource.driver'] = 'com.mysql.jdbc.Driver' if node['aps-core']['admin_db']['engine'] == 'mysql'
-default['aps-core']['activiti-admin-properties']['datasource.driver'] = 'org.postgresql.Driver' if node['aps-core']['admin_db']['engine'] == 'postgres'
-default['aps-core']['activiti-admin-properties']['datasource.driver'] = 'org.h2.Driver' if node['aps-core']['admin_db']['engine'] == 'h2'
+default['aps-core']['activiti-admin-properties']['datasource.driver'] = lazy { 'com.mysql.jdbc.Driver' } if node['aps-core']['admin_db']['engine'] == 'mysql'
+default['aps-core']['activiti-admin-properties']['datasource.driver'] = lazy { 'org.postgresql.Driver' } if node['aps-core']['admin_db']['engine'] == 'postgres'
+default['aps-core']['activiti-admin-properties']['datasource.driver'] = lazy { 'org.h2.Driver' } if node['aps-core']['admin_db']['engine'] == 'h2'
 
 # Database username and password
 default['aps-core']['activiti-admin-properties']['datasource.username'] = 'alfresco'
@@ -13,12 +13,12 @@ default['aps-core']['activiti-admin-properties']['datasource.password'] = 'alfre
 # Datasource URL
 default['aps-core']['activiti-admin-properties']['datasource.url'] = lazy { "jdbc:mysql://#{node['aps-core']['admin_db']['host']}:3306/activitiadmin?connectTimeout=240000&socketTimeout=240000&autoReconnect=true&characterEncoding=UTF-8" } if node['aps-core']['admin_db']['engine'] == 'mysql'
 default['aps-core']['activiti-admin-properties']['datasource.url'] = lazy { "jdbc:postgresql://#{node['aps-core']['admin_db']['host']}:5432/activitiadmin?characterEncoding=UTF-8" } if node['aps-core']['admin_db']['engine'] == 'postgres'
-default['aps-core']['activiti-admin-properties']['datasource.url'] = lazy { "jdbc:h2:#{node['aps-core']['admin_db']['host']}/activitiadmin?characterEncoding=UTF-8" } if node['aps-core']['admin_db']['engine'] == 'h2'
+default['aps-core']['activiti-admin-properties']['datasource.url'] = lazy { 'jdbc:h2:mem:db1;DB_CLOSE_DELAY=1000' } if node['aps-core']['admin_db']['engine'] == 'h2'
 
 # Datasource dialect
-default['aps-core']['activiti-admin-properties']['hibernate.dialect'] = 'org.hibernate.dialect.MySQLDialect' if node['aps-core']['admin_db']['engine'] == 'mysql'
-default['aps-core']['activiti-admin-properties']['hibernate.dialect'] = 'org.hibernate.dialect.PostgreSQLDialect' if node['aps-core']['admin_db']['engine'] == 'postgres'
-default['aps-core']['activiti-admin-properties']['hibernate.dialect'] = 'hibernate.dialect=org.hibernate.dialect.H2Dialect' if node['aps-core']['admin_db']['engine'] == 'h2'
+default['aps-core']['activiti-admin-properties']['hibernate.dialect'] = lazy { 'org.hibernate.dialect.MySQLDialect' } if node['aps-core']['admin_db']['engine'] == 'mysql'
+default['aps-core']['activiti-admin-properties']['hibernate.dialect'] = lazy { 'org.hibernate.dialect.PostgreSQLDialect' } if node['aps-core']['admin_db']['engine'] == 'postgres'
+default['aps-core']['activiti-admin-properties']['hibernate.dialect'] = lazy { 'org.hibernate.dialect.H2Dialect' } if node['aps-core']['admin_db']['engine'] == 'h2'
 
 # Other defaults
 default['aps-core']['activiti-admin-properties']['cluster.monitoring.max.inactive.time'] = 600000
