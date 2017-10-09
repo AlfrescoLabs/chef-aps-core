@@ -9,12 +9,20 @@ include_recipe 'aps-core::_download_artifacts'
 
 template "#{tomcat_home}/lib/activiti-app.properties" do
   source 'activiti-properties.erb'
-  variables properties: node['aps-core']['activiti-app-properties']
+  variables(
+    lazy do
+      { properties: node['aps-core']['activiti-app-properties'] }
+    end
+  )
 end
 
 template "#{tomcat_home}/lib/activiti-admin.properties" do
   source 'activiti-properties.erb'
-  variables properties: node['aps-core']['activiti-admin-properties']
+  variables(
+    lazy do
+      { properties: node['aps-core']['activiti-admin-properties'] }
+    end
+  )
   only_if { node['aps-core']['admin_app']['install'] }
 end
 
