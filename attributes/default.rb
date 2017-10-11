@@ -2,6 +2,7 @@ default['aps-core']['version'] = '1.6.4'
 
 default['aps-core']['nexus']['username'] = 'your-nexus-username'
 default['aps-core']['nexus']['password'] = 'your-nexus-password'
+default['aps-core']['redownload_apps'] = true
 
 # db settings for activiti properties
 default['aps-core']['db']['engine'] = 'mysql'

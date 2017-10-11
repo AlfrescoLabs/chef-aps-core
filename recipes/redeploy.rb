@@ -5,7 +5,7 @@ service service_name do
   action :stop
 end
 
-include_recipe 'aps-core::_download_artifacts'
+include_recipe 'aps-core::_download_artifacts' if node['aps-core']['redownload_apps']
 
 template "#{tomcat_home}/lib/activiti-app.properties" do
   source 'activiti-properties.erb'
