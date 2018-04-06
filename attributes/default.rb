@@ -1,4 +1,4 @@
-default['aps-core']['version'] = '1.6.4'
+default['aps-core']['version'] = '1.8.1'
 
 default['aps-core']['nexus']['username'] = 'your-nexus-username'
 default['aps-core']['nexus']['password'] = 'your-nexus-password'
@@ -22,6 +22,6 @@ default['aps-core']['war_file_paths_to_override'] = %w()
 
 # admin app controls
 default['aps-core']['admin_app']['install'] = false
-default['aps-core']['admin_app']['version'] = '1.6.4'
+default['aps-core']['admin_app']['version'] = '1.8.1'
 default['aps-core']['admin_db']['engine'] = 'mysql'
 default['aps-core']['admin_db']['host'] = '127.0.0.1'
