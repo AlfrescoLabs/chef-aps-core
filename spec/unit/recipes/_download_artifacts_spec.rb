@@ -21,9 +21,9 @@ RSpec.describe 'aps-core::_download_artifacts' do
   end
 
   it 'creates if missing a activiti remote file' do
-    chef_run.node.normal['aps-core']['version'] = '1.6.4'
+    chef_run.node.normal['aps-core']['version'] = '1.8.1'
     chef_run.converge(described_recipe)
-    expect(chef_run).to create_remote_file_if_missing('/var/chef/cache/activiti-app-1.6.4.war').with(
+    expect(chef_run).to create_remote_file_if_missing('/var/chef/cache/activiti-app-1.8.1.war').with(
       user: 'tomcat',
       group: 'tomcat'
     )
