@@ -32,8 +32,8 @@ remote_file tmp_activiti_war_path do
 end
 
 remote_file tmp_admin_zip_path do
-  source "https://s3.amazonaws.com/aps-quickstart/activiti-admin-1.8.1.zip"
-#  source "https://releases.alfresco.com/Activiti/ProcessServices-1.6/1.6.4/activiti-admin-1.6.4.zip"
+#  source "https://s3.amazonaws.com/aps-quickstart/activiti-admin-1.8.1.zip"
+  source "https://releases.alfresco.com/Activiti/ProcessServices-#{major_minor_version}/#{aps_admin_version}/activiti-admin-#{aps_admin_version}.zip"
 #  source "http://eu.dl.alfresco.com.s3.amazonaws.com/release/enterprise/process-services-#{major_minor_version}/#{aps_admin_version}/activiti-admin-#{aps_admin_version}.zip"
   owner appserver_username
   group appserver_group
