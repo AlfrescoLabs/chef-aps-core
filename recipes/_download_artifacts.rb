@@ -32,7 +32,7 @@ remote_file tmp_activiti_war_path do
 end
 
 remote_file tmp_admin_zip_path do
-  source "https://s3.amazonaws.com/aps-quickstart/activiti-admin-1.8.1.zip"
+  source "https://#{nexus_username}:#{nexus_password}@artifacts.alfresco.com/nexus/service/local/repositories/activiti-enterprise-releases/content/com/activiti/activiti-admin/#{aps_version}/activiti-admin-#{aps_version}.war"
   owner appserver_username
   group appserver_group
   mode 00740
